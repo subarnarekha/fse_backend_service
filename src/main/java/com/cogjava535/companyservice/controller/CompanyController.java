@@ -1,7 +1,12 @@
 package com.cogjava535.companyservice.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +31,20 @@ public class CompanyController {
 		companyOutput.setCeo(companyInput.getCeo());
 		compService.registerComapny(companyInput);
 		return ResponseEntity.ok(companyOutput);
+	}
+	
+	@GetMapping(path="/getall")
+	public ResponseEntity<List<CompanyDto>> getAllCompanies(){
+		List<CompanyDto> complanyList = new ArrayList<CompanyDto>();
+		complanyList = compService.getAllCompanies();
+		return ResponseEntity.ok(complanyList);
+	}
+	
+	@GetMapping(path="/info/{id}")
+	public ResponseEntity<CompanyDto> getCompanyDetails(@PathVariable String id ){
+		CompanyDto complanyInfo = new CompanyDto();
+		complanyInfo = compService.getCompanyDetails(id);
+		return ResponseEntity.ok(complanyInfo);
 	}
 	
 }
